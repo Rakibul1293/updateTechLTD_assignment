@@ -22,7 +22,7 @@ const Form = () => {
 		const currentLocation = window.location.pathname;
 		const path_id = currentLocation.split('/').slice(1).join('/');
 		
-		axios.patch(`http://localhost:5000/api/userInfo/${path_id}`, formData, {
+		axios.patch(`https://rocky-peak-43925.herokuapp.com/api/userInfo/${path_id}`, formData, {
 			headers: {
 			  'Content-Type': 'multipart/form-data'
 			}

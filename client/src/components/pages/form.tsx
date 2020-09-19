@@ -18,7 +18,7 @@ const Form = () => {
 		formData.append('TextField', data.TextField);
 		formData.append('select', data.select.value);
 		
-		axios.post('http://localhost:5000/api/userInfo', formData, {
+		axios.post('https://rocky-peak-43925.herokuapp.com/api/userInfo', formData, {
 			headers: {
 			  'Content-Type': 'multipart/form-data'
 			}

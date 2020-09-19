@@ -44,7 +44,7 @@ const FileUploadExtrenal = () => {
 	formData.append("file", file_list.originFileObj);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/upload_external', formData, {
+      const res = await axios.post('https://rocky-peak-43925.herokuapp.com/api/upload_external', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

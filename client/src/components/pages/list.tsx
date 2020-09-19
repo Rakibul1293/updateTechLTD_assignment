@@ -10,7 +10,7 @@ const List = () => {
   const [allData, setAllData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/')
+    axios.get('https://rocky-peak-43925.herokuapp.com/api/')
       .then(res => {
         console.log(res);
         setAllData(res.data);

@@ -8,7 +8,7 @@ const ShowImage = () => {
 	const [allData, setAllData] = useState([]);
 	
 	useEffect(() => {
-    axios.get('http://localhost:5000/api/files')
+    axios.get('https://rocky-peak-43925.herokuapp.com/api/files')
 		 .then(res => {
 			setAllData(res.data);
 		 })
@@ -23,7 +23,7 @@ const ShowImage = () => {
 		const param_id = e.target.search.value;
 		setId(param_id);
 		
-		axios.get(`http://localhost:5000/api/image/${param_id}`)
+		axios.get(`https://rocky-peak-43925.herokuapp.com/api/image/${param_id}`)
 		  .then(res => {
 			setImgUrl(res.data.imgurl);
 		  })
