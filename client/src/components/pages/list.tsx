@@ -10,7 +10,7 @@ const List = () => {
   const [allData, setAllData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/userInfo')
+    axios.get('http://localhost:5000/api/')
       .then(res => {
         console.log(res);
         setAllData(res.data);
@@ -19,29 +19,41 @@ const List = () => {
         console.log(err);
         message.error(err);
       })
-  });
+  }, []);
 
   const columns = [
     {
       title: 'Username',
-      dataIndex: 'username',
+      dataIndex: 'name',
+	  key: 'name'
     },
     {
       title: 'Email',
-      dataIndex: 'email'
+      dataIndex: 'email',
+	  key: 'email'
     },
     {
       title: 'Image',
-      dataIndex: 'image'
+      dataIndex: 'image',
+	  key: 'image',
+	  render: (theImageURL: any) => <img alt={theImageURL} src={theImageURL} style={{width: "75px"}} />
     },
     {
       title: 'Message',
-      dataIndex: 'message'
+      dataIndex: 'textField',
+	  key: 'textField'
     },
     {
       title: 'Choice',
-      dataIndex: 'choice'
+      dataIndex: 'selectedVal',
+	  key: 'selectedVal'
     },
+	{
+	  title: 'Action',
+	  dataIndex: 'action',
+	  key: 'action',
+	  render: () => <a onClick={(e: any) => handleClickUpdate(e)}>Edit</a>
+    }
   ];
 
   const data = [{
@@ -49,18 +61,28 @@ const List = () => {
 
   allData.map((user: any) => {
     data.push({
-      key: user.id,
-      username: user.username,
+      key: user._id,
+      name: user.name,
       email: user.email,
       image: user.image,
-      message: user.message,
-      choice: user.choice
+      textField: user.textField,
+      selectedVal: user.selectedVal,
+	  action: 'Edit'
     })
     return data;
   });
+  console.log(data);
+  
+  const handleClickUpdate = (e: any) => {
+	console.log(e.target.closest('tr').getAttribute("data-row-key"));
+	const getId = e.target.closest('tr').getAttribute("data-row-key");
+	console.log(getId);
+	
+    history.push(`/form-update/${getId}`);
+  }
 
   const handleClick = () => {
-    history.push('/form')
+    history.push('/form');
   }
 
   return (
@@ -69,7 +91,7 @@ const List = () => {
         <Col span={18}>
           <Title level={2}>
             User List
-            </Title>
+          </Title>
         </Col>
         <Col span={6}>
           <Button onClick={handleClick} block>Add User</Button>

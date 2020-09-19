@@ -1,11 +1,32 @@
 const express = require('express');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const path = require('path');
 const methodOverride = require('method-override');
+const crypto = require('crypto');
+const multer = require('multer');
+const Grid = require('gridfs-stream');
+const GridFsStorage = require('multer-gridfs-storage');
+const {parse, stringify} = require('flatted');
+
 
 const userInfoRoutes = require('./api/routes/userInfoRoutes.tsx');
+const User = require("./api/models/userInfo.tsx");
+
+const mongoURI = 'mongodb+srv://dbUser:YN8cDaSJksn8nro6@tmcluster.wbdpu.mongodb.net/UpdateTechLtdAssignment?retryWrites=true&w=majority';
+
+// Create mongo connection
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+console.log(mongoose.connection.readyState);
+mongoose.set('debug', true);
 
 // Middleware
 const app = express();
+app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 

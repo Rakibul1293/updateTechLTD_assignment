@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { UserOutlined, UploadOutlined } from '@ant-design/icons';
+import { UserOutlined, UploadOutlined, DatabaseOutlined, FileImageOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 
 const SideNav = () => {
@@ -10,8 +10,16 @@ const SideNav = () => {
         history.push('/list');
     }
 
-    const handleUploadClick = () => {
-        history.push('/upload');
+    const handleUploadClickExternal = () => {
+        history.push('/upload_external');
+    }
+	
+	const handleUploadClickInternal = () => {
+        history.push('/upload_internal');
+    }
+	
+	const handleImageShow = () => {
+        history.push('/show-image');
     }
 
     return (
@@ -22,9 +30,17 @@ const SideNav = () => {
                     <UserOutlined />
                     <span> Users</span>
                 </Menu.Item>
-                <Menu.Item key="2" onClick={handleUploadClick}>
-                    <UploadOutlined />
-                    <span> Upload</span>
+                <Menu.Item key="2" onClick={handleUploadClickExternal}>
+                    <DatabaseOutlined />
+                    <span> Image Store 1</span>
+                </Menu.Item>
+				<Menu.Item key="3" onClick={handleUploadClickInternal}>
+                    <DatabaseOutlined />
+                    <span> Image Store 2</span>
+                </Menu.Item>
+				<Menu.Item key="4" onClick={handleImageShow}>
+                    <FileImageOutlined />
+                    <span> Image Fetch</span>
                 </Menu.Item>
             </Menu>
         </div>

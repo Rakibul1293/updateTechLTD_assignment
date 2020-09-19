@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import List from "../components/pages/list";
 import Form from "../components/pages/form";
+import FormUpdate from "../components/pages/form_update";
 import SideNav from "../components/layouts/sidebar";
-import Upload from "../components/pages/upload";
+import UploadExternal from "../components/pages/upload_external";
+import UploadInternal from "../components/pages/upload_internal";
+import ShowImage from "../components/pages/show_image";
 
 import { Layout } from 'antd';
 import {
@@ -43,7 +46,10 @@ const ApplicationRoutes = () => {
             <Switch>
               <Route path="/list" component={List} />
               <Route path="/form" component={Form} />
-              <Route path="/upload" component={Upload} />
+              <Route path="/upload_external" component={UploadExternal} />
+			  <Route path="/upload_internal" component={UploadInternal} />
+			  <Route path="/form-update" component={FormUpdate} />
+			  <Route path="/show-image" component={ShowImage} />
               <Redirect to="/list" from="/" />
             </Switch>
           </Content>

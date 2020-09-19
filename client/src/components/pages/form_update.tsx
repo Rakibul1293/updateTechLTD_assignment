@@ -11,6 +11,7 @@ const Form = () => {
 	const history = useHistory();
 
 	const onSubmit = (data: any) => {
+		
 		const formData: any = new FormData();
 		formData.append('name', data.name);
 		formData.append('email', data.email);
@@ -18,13 +19,16 @@ const Form = () => {
 		formData.append('TextField', data.TextField);
 		formData.append('select', data.select.value);
 		
-		axios.post('http://localhost:5000/api/userInfo', formData, {
+		const currentLocation = window.location.pathname;
+		const path_id = currentLocation.split('/').slice(1).join('/');
+		
+		axios.patch(`http://localhost:5000/api/userInfo/${path_id}`, formData, {
 			headers: {
 			  'Content-Type': 'multipart/form-data'
 			}
         })
 		.then(data => {
-			message.success('User Added Successfully!');
+			message.success('Updated Successfully!');
 			history.push('/list');
 		})
 		.catch(err => {
@@ -35,13 +39,13 @@ const Form = () => {
 
 	return (
 		<div>
-			<h3 className="text-muted text-center">Please Fill Up This Form</h3>
+			<h3 className="text-muted text-center">Update Your Form</h3>
 			< form className="forms" onSubmit={handleSubmit(onSubmit)} >
 
-				<input name="name" ref={register({ required: true })} placeholder="Your Name" />
+				< input name="name" ref={register({ required: true })} placeholder="Your Name" />
 				{errors.name && <span className="error">Name is required</span>}
 
-				<input name="email" ref={register({ required: true })} placeholder="Your Email" />
+				< input name="email" ref={register({ required: true })} placeholder="Your Email" />
 				{errors.email && <span className="error">Email is required</span>}
 
 				<input name="file" ref={register({ required: true })} type="file" />

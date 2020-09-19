@@ -1,27 +1,30 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Message from './Message';
 import Progress from './Progress';
 import axios from 'axios';
 
-const FileUpload = () => {
+const FileUploadInternal = () => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [imgName, setImgName] = useState();
+  const [imgUrl, setImgUrl] = useState();
 
   const onChange = e => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
   };
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
+	console.log(formData);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/upload', formData, {
+      const res = await axios.post('http://localhost:5000/api/upload_img_database', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -37,12 +40,15 @@ const FileUpload = () => {
         }
       });
 
-      const { fileName, filePath } = res.data;
+      const { fileName, filePath, imgUrl } = res.data;
 
       setUploadedFile({ fileName, filePath });
-
+	  setImgUrl(res.data.imgUrl);
+	  setImgName(res.data.file.filename);
+	  
       setMessage('File Uploaded');
     } catch (err) {
+		console.log(err);
       if (err.response.status === 500) {
         setMessage('There was a problem with the server');
       } else {
@@ -50,7 +56,7 @@ const FileUpload = () => {
       }
     }
   };
-
+  
   return (
     <Fragment>
       {message ? <Message msg={message} /> : null}
@@ -78,8 +84,8 @@ const FileUpload = () => {
       {uploadedFile ? (
         <div className='row mt-5'>
           <div className='col-md-6 m-auto'>
-            <h3 className='text-center'>{uploadedFile.fileName}</h3>
-            <img style={{ width: '100%' }} src={uploadedFile.filePath} alt='' />
+            <h3 className='text-center'>{uploadedFile.fileName}</h3>	
+			{ imgUrl && <img style={{ width: '100%' }} src={`${imgUrl}`} /> }
           </div>
         </div>
       ) : null}
@@ -87,4 +93,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default FileUploadInternal;

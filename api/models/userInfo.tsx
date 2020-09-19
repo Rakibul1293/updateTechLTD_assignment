@@ -10,7 +10,7 @@ const userInfoSchema = mongoose.Schema({
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     textField: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: mongoose.Schema.Types.Mixed, required: true },
     selectedVal: { type: String, required: true }
 });
 
