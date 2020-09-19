@@ -3,10 +3,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
+require('dotenv').config();
 
 const UserInfo = require('../models/userInfo.tsx');
 
-const mongoURI = 'mongodb+srv://dbUser:YN8cDaSJksn8nro6@tmcluster.wbdpu.mongodb.net/UpdateTechLtdAssignment?retryWrites=true&w=majority';
+const uri = process.env.DB_PATH;
+
+const mongoURI = uri;
 
 // Create mongo connection
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });

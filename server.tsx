@@ -8,21 +8,19 @@ const crypto = require('crypto');
 const multer = require('multer');
 const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage');
-const {parse, stringify} = require('flatted');
-
+require('dotenv').config();
 
 const userInfoRoutes = require('./api/routes/userInfoRoutes.tsx');
-const User = require("./api/models/userInfo.tsx");
 
-const mongoURI = 'mongodb+srv://dbUser:YN8cDaSJksn8nro6@tmcluster.wbdpu.mongodb.net/UpdateTechLtdAssignment?retryWrites=true&w=majority';
+const uri = process.env.DB_PATH;
+
+const mongoURI = uri;
 
 // Create mongo connection
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
-console.log(mongoose.connection.readyState);
-mongoose.set('debug', true);
 
 // Middleware
 const app = express();
@@ -46,5 +44,5 @@ app.use((req, res, next) => {
 // Routes which should handle requests
 app.use("/api", userInfoRoutes);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port ${port}`));

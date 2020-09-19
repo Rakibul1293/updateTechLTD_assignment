@@ -6,15 +6,16 @@ const crypto = require('crypto');
 const multer = require('multer');
 const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage');
+require('dotenv').config();
 
 const UserInfoController = require('../controllers/userInfoController.tsx');
 
-const mongoURI = 'mongodb+srv://dbUser:YN8cDaSJksn8nro6@tmcluster.wbdpu.mongodb.net/UpdateTechLtdAssignment?retryWrites=true&w=majority';
+const uri = process.env.DB_PATH;
+
+const mongoURI = uri;
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
-console.log(mongoose.connection.readyState);
-mongoose.set('debug', true);
 
 const app = express();
 
